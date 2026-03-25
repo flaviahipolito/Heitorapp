@@ -9,8 +9,10 @@ import { useTheme } from "../context/ThemeContext";
 interface ProfileData {
   name: string;
   birthDate: string; // formato ISO YYYY-MM-DD
+  gender: 'male' | 'female';
   glucoseMin: number;
   glucoseMax: number;
+  conditions: string[]; // array de condições de saúde
   allergies: string;
   favorites: string;
   restrictions: string;
@@ -23,12 +25,14 @@ export function ProfileScreen() {
   const [showSettings, setShowSettings] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   
-  // Valores padrão do Heitor
+  // Valores padrão
   const defaultProfile: ProfileData = {
     name: "Heitor",
     birthDate: "2019-06-13",
+    gender: "male",
     glucoseMin: 80,
     glucoseMax: 130,
+    conditions: ["Diabetes Tipo 1", "Doença Celíaca"],
     allergies: "Glúten",
     favorites: "Frango, Arroz, Banana",
     restrictions: "Sem glúten"
@@ -378,16 +382,73 @@ export function ProfileScreen() {
             {/* Profile Card */}
             <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-6">
               <div className="flex flex-col items-center">
-                <HeitorAvatar mood="happy" size="lg" />
+                <HeitorAvatar mood="happy" size="lg" gender={isEditing ? editedData.gender : profileData.gender} />
                 {isEditing ? (
-                  <div className="w-full mt-4 space-y-2">
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Nome</label>
-                    <input
-                      type="text"
-                      value={editedData.name}
-                      onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
-                      className="w-full text-2xl font-semibold text-gray-800 text-center bg-gray-50 rounded-xl px-4 py-2 outline-none border border-gray-200"
-                    />
+                  <div className="w-full mt-4 space-y-4">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Nome</label>
+                      <input
+                        type="text"
+                        value={editedData.name}
+                        onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
+                        className="w-full text-2xl font-semibold text-gray-800 text-center bg-gray-50 rounded-xl px-4 py-2 outline-none border border-gray-200"
+                      />
+                    </div>
+                    
+                    {/* Seleção de Gênero */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-2">Gênero</label>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setEditedData({ ...editedData, gender: 'male' })}
+                          className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all ${
+                            editedData.gender === 'male'
+                              ? 'bg-blue-500 text-white shadow-lg shadow-blue-200'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          👦 Masculino
+                        </button>
+                        <button
+                          onClick={() => setEditedData({ ...editedData, gender: 'female' })}
+                          className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all ${
+                            editedData.gender === 'female'
+                              ? 'bg-pink-500 text-white shadow-lg shadow-pink-200'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          👧 Feminino
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Seleção de Condições de Saúde */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-2">Condições de saúde</label>
+                      <div className="space-y-2">
+                        {['Diabetes Tipo 1', 'Diabetes Tipo 2', 'Doença Celíaca', 'Intolerância à Lactose', 'Alergia Alimentar'].map((condition) => (
+                          <button
+                            key={condition}
+                            onClick={() => {
+                              const newConditions = editedData.conditions.includes(condition)
+                                ? editedData.conditions.filter(c => c !== condition)
+                                : [...editedData.conditions, condition];
+                              setEditedData({ ...editedData, conditions: newConditions });
+                            }}
+                            className={`w-full py-2.5 px-4 rounded-xl text-sm font-medium transition-all text-left flex items-center justify-between ${
+                              editedData.conditions.includes(condition)
+                                ? 'bg-blue-500 text-white shadow-md'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                          >
+                            <span>{condition}</span>
+                            {editedData.conditions.includes(condition) && (
+                              <Check className="w-4 h-4" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <>
@@ -398,14 +459,19 @@ export function ProfileScreen() {
                   </>
                 )}
                 
-                <div className="flex gap-2 mt-2">
-                  <span className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1.5 rounded-full">
-                    Diabetes Tipo 1
-                  </span>
-                  <span className="bg-green-100 text-green-700 text-xs font-medium px-3 py-1.5 rounded-full">
-                    Celíaco
-                  </span>
-                </div>
+                {!isEditing && (
+                  <div className="flex flex-wrap gap-2 mt-2 justify-center">
+                    {profileData.conditions.map((condition, idx) => (
+                      <span key={idx} className={`text-xs font-medium px-3 py-1.5 rounded-full ${
+                        profileData.gender === 'female' 
+                          ? 'bg-pink-100 text-pink-700'
+                          : 'bg-blue-100 text-blue-700'
+                      }`}>
+                        {condition}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 

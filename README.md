@@ -4,7 +4,7 @@
 
 **Aplicativo mobile para controle de glicemia e alimentação segura**
 
-*Desenvolvido com carinho para auxiliar no cuidado diário de crianças com Diabetes e Doença Celíaca*
+*Desenvolvido com carinho para auxiliar no cuidado diário de crianças com Diabetes Tipo 1 e Doença Celíaca*
 
 </div>
 
@@ -12,7 +12,7 @@
 
 ## 📱 Sobre o Projeto
 
-O **HeitorApp** é um aplicativo web mobile que auxilia no controle de glicemia e alimentação segura para crianças com Diabetes e Doença Celíaca. Desenvolvido com foco em proporcionar uma experiência leve, acolhedora e funcional tanto para responsáveis quanto para as crianças.
+O **HeitorApp** é um aplicativo web mobile que auxilia no controle de glicemia e alimentação segura para crianças com Diabetes Tipo 1 e Doença Celíaca. Desenvolvido com foco em proporcionar uma experiência leve, acolhedora e funcional tanto para responsáveis quanto para as crianças.
 
 O app combina funcionalidade para adultos com elementos lúdicos para engajar a criança no autocuidado, utilizando gamificação leve, feedback positivo e um design infantil moderno.
 

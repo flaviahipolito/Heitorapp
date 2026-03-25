@@ -16,9 +16,21 @@ export function HomeScreen() {
     recipes: 0
   });
   const [allRecords, setAllRecords] = useState<any[]>([]);
+  const [profileGender, setProfileGender] = useState<'male' | 'female'>('male');
 
   // Carregar dados do localStorage
   useEffect(() => {
+    // Carregar gênero do perfil
+    const storedProfile = localStorage.getItem('heitor_profile');
+    if (storedProfile) {
+      try {
+        const profile = JSON.parse(storedProfile);
+        setProfileGender(profile.gender || 'male');
+      } catch (e) {
+        console.error('Erro ao carregar perfil:', e);
+      }
+    }
+    
     const stored = localStorage.getItem('heitor_last_reading');
     if (stored) {
       setLastReading(JSON.parse(stored));
@@ -86,7 +98,7 @@ export function HomeScreen() {
                   Quarta-feira, 25 de Março
                 </p>
               </div>
-              <HeitorAvatar mood={smartMessage.mood} size="md" />
+              <HeitorAvatar mood={smartMessage.mood} size="md" gender={profileGender} />
             </div>
 
             {/* Smart Message Card */}

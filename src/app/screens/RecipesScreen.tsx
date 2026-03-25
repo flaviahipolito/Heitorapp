@@ -324,9 +324,21 @@ export function RecipesScreen() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchProgress, setSearchProgress] = useState("");
   const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
+  const [profileGender, setProfileGender] = useState<'male' | 'female'>('male');
 
   // Carregar receitas salvas do localStorage ao montar o componente
   useEffect(() => {
+    // Carregar gênero do perfil
+    const storedProfile = localStorage.getItem('heitor_profile');
+    if (storedProfile) {
+      try {
+        const profile = JSON.parse(storedProfile);
+        setProfileGender(profile.gender || 'male');
+      } catch (e) {
+        console.error('Erro ao carregar perfil:', e);
+      }
+    }
+    
     const stored = localStorage.getItem('heitor-saved-recipes');
     if (stored) {
       try {
@@ -639,7 +651,7 @@ export function RecipesScreen() {
             </button>
 
             <div className="flex items-center gap-4 mb-6">
-              <HeitorAvatar mood="happy" size="md" />
+              <HeitorAvatar mood="happy" size="md" gender={profileGender} />
               <div>
                 <h1 className="text-2xl font-semibold text-gray-800">
                   Receitas Seguras

@@ -28,11 +28,23 @@ export function GlycemiaScreen() {
   const [editValue, setEditValue] = useState("");
   const [editInsulin, setEditInsulin] = useState("");
   const [editNotes, setEditNotes] = useState("");
+  const [profileGender, setProfileGender] = useState<'male' | 'female'>('male');
   
   const [historyData, setHistoryData] = useState<GlycemiaRecord[]>([]);
 
   // Carregar registros do localStorage ao montar o componente
   useEffect(() => {
+    // Carregar gênero do perfil
+    const storedProfile = localStorage.getItem('heitor_profile');
+    if (storedProfile) {
+      try {
+        const profile = JSON.parse(storedProfile);
+        setProfileGender(profile.gender || 'male');
+      } catch (e) {
+        console.error('Erro ao carregar perfil:', e);
+      }
+    }
+    
     const stored = localStorage.getItem('heitor-glycemia-records');
     if (stored) {
       try {
@@ -239,7 +251,7 @@ export function GlycemiaScreen() {
             </button>
 
             <div className="flex items-center gap-4 mb-6">
-              <HeitorAvatar mood={showSuccess ? "happy" : currentMood} size="md" />
+              <HeitorAvatar mood={showSuccess ? "happy" : currentMood} size="md" gender={profileGender} />
               <div>
                 <h1 className="text-2xl font-semibold text-gray-800">
                   Registrar Glicemia
