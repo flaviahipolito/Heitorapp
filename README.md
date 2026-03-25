@@ -4,7 +4,7 @@
 
 **Aplicativo mobile para controle de glicemia e alimentação segura**
 
-*Desenvolvido com carinho para auxiliar no cuidado diário de crianças com Diabetes Tipo 1 e Doença Celíaca*
+*Desenvolvido com carinho para auxiliar no cuidado diário de crianças com Diabetes e Doença Celíaca*
 
 </div>
 
