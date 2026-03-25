@@ -49,13 +49,13 @@ O app responde ao comportamento do usuário e aos dados registrados:
 
 ### 🏠 Tela Inicial e Fluxos Principais
 
-![Tela inicial](./assets/preview-1.png)
+![Tela inicial](./assets/2.png)
 
 ---
 
 ### 🤖 Sistema de Feedback Inteligente
 
-![Sistema de mensagens](./assets/preview-2.png)
+![Sistema de mensagens](./assets/1.png)
 
 ---
 
